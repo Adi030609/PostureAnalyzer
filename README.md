@@ -1,89 +1,172 @@
-# Real-Time Knee Tracking and Pose Estimation using OpenCV and MediaPipe
+# 🧍‍♂️ Posture Analyzer (OpenCV + MediaPipe + Streamlit + Docker)
 
-This project demonstrates real-time knee tracking and pose estimation using Python, OpenCV, and MediaPipe. It aims to track the movement of the knees dynamically and visualize the pose estimation from live video feed or pre-recorded video footage.
+This project is a **Posture Analysis System** built using **OpenCV**, **MediaPipe**, and **Streamlit**, capable of tracking knee movement, drawing pose landmarks, and visualizing joint motion paths.  
+The entire application is **Dockerized**, making it extremely easy to run anywhere without dependency issues.
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Demo](#demo)
-- [Project Structure](#project-structure)
-- [Customization](#customization)
-- [Contributing](#contributing)
-- [License](#license)
+---
 
-## Overview
-The project leverages MediaPipe's Pose estimation model to detect human body landmarks and tracks the left and right knee movements in real time. It provides both visual feedback on the video frames and a dynamic plot of knee positions to analyze the range of motion.
+## 🚀 Features
 
-## Features
-- **Real-Time Pose Estimation:** Uses MediaPipe's Pose estimation model to detect body landmarks.
-- **Dynamic Knee Tracking:** Tracks and visualizes left and right knee positions over time.
-- **Interactive Data Plotting:** Live updating plot showing knee movements with dynamic axes scaling.
-- **Visual Feedback:** Displays pose landmarks on the video feed and a separate pose-only view.
-- **User-Friendly Controls:** Press 'q' to exit the application.
+- Real-time posture estimation using **MediaPipe Pose**
+- Knee tracking with live plotted trajectories
+- Visual output of pose skeleton
+- Streamlit interface for:
+  - Uploading custom videos  
+  - Using built-in sample videos  
+  - Running analysis with a single click
+- Fully containerized using Docker
+- Works consistently across systems due to Docker isolation
 
-## Requirements
-To run this project, you need:
-- Python 3.x
-- The following Python libraries:
-  - `opencv-python`
-  - `mediapipe`
-  - `numpy`
-  - `matplotlib`
+---
 
-## Installation
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/knee-tracking-pose-estimation.git
-   cd knee-tracking-pose-estimation
-   ```
+## 📁 Project Structure
 
-2. **Install the required libraries:**
-   ```bash
-   pip install opencv-python mediapipe numpy matplotlib
-   ```
-
-## Usage
-1. **Run the script:**
-   - To use a video file for pose estimation, modify the `cap = cv2.VideoCapture()` line in the code to provide the path to your video file.
-   - Alternatively, set it to `cap = cv2.VideoCapture(0)` for live camera feed.
-
-   ```bash
-   python knee_tracking_pose_estimation.py
-   ```
-
-2. **Press 'q' to exit the application.**
-
-## Demo
-Below is an example of how the system works:
-
-1. **Pose Estimation:** The script detects human body landmarks in real time.
-2. **Knee Tracking:** Plots the trajectory of knee movements.
-3. **Live Visualization:** Shows the original video with pose landmarks and a separate plot of knee positions.
-
-## Project Structure
-```
-knee-tracking-pose-estimation/
-│
-├── knee_tracking_pose_estimation.py   # Main script file
-├── README.md                          # Project README file
-└── requirements.txt                   # List of dependencies
+```text
+PostureAnalysis/
+│── Analyzer.py
+│── app.py
+│── Sample1.mp4
+│── Sample2.mp4
+│── requirements.txt
+│── Dockerfile
+└── README.md
 ```
 
-## Customization
-- **Tracking other landmarks:** You can modify the code to track different body landmarks by changing the indices used for `left_knee` and `right_knee`.
-- **Changing the plot style:** Customize the plot by modifying Matplotlib settings (line color, style, etc.).
-- **Adjusting the frame size:** Change the `cv2.resize()` parameters to set a different frame size.
+---
 
-## Contributing
-Contributions are welcome! If you would like to contribute, please:
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.
+## 🧠 How It Works
 
+- The **`Analyzer.py`** file handles all processing:
+  - Reads video frames
+  - Extracts pose landmarks
+  - Tracks knee positions
+  - Displays pose and extracted keypoints
+- The **Streamlit app** provides a simple UI for interacting with the analyzer.
+- With **Docker**, everything runs the same on any machine.
 
+---
 
+## 🖥️ Running Locally (Without Docker)
+
+### 1️⃣ Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### 2️⃣ Activate it
+
+**Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**Mac/Linux:**
+```bash
+source venv/bin/activate
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4️⃣ Run Streamlit app
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# 🐳 Running Using Docker (Recommended)
+
+## 1️⃣ Build Docker Image
+
+Run this inside your project folder:
+
+```bash
+docker build -t marti18/analyzer .
+```
+
+---
+
+## 2️⃣ Run the Container
+
+```bash
+docker run -p 8501:8501 marti18/analyzer
+```
+
+Now open your browser and go to:
+
+👉 **[http://localhost:8501](http://localhost:8501)**
+
+---
+
+## 3️⃣ Push Image to Docker Hub
+
+### Login
+```bash
+docker login
+```
+
+### Tag image
+```bash
+docker tag marti18/analyzer marti18/analyzer:latest
+```
+
+### Push image
+```bash
+docker push marti18/analyzer:latest
+```
+
+You can now pull it from anywhere using:
+```bash
+docker pull marti18/analyzer
+docker run -p 8501:8501 marti18/analyzer
+```
+
+---
+
+# 🧪 Example Usage
+
+### ▶ Run analysis on:
+* Uploaded video
+* Sample1.mp4
+* Sample2.mp4
+
+Streamlit provides:
+* Pose skeleton window
+* Extracted pose window
+* Knee trajectory plot
+
+---
+
+# 📦 Requirements
+
+All dependencies are listed inside **requirements.txt**:
+
+```text
+opencv-python
+mediapipe
+numpy
+matplotlib
+streamlit
+```
+
+---
+
+# 🛠 Technologies Used
+
+* **Python**
+* **OpenCV**
+* **MediaPipe**
+* **Matplotlib**
+* **Streamlit**
+* **Docker**
+
+---
+
+# ✨ Author
+**Aditya Pratap Singh**
